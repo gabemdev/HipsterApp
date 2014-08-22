@@ -77,18 +77,18 @@
 			remoteGlobalIDString = 6D66CE811964F57E00AF16F9;
 			remoteInfo = test;
 		};
-		6D73356E19A70C0800A3552A /* PBXContainerItemProxy */ = {
+		6D7335BD19A711BD00A3552A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 6D73356919A70C0800A3552A /* GMDLibrary.xcodeproj */;
+			containerPortal = 6D7335B819A711BD00A3552A /* GMDLibrary.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 6D73352F19A7061D00A3552A;
+			remoteGlobalIDString = 6D73357C19A7104E00A3552A;
 			remoteInfo = GMDLibrary;
 		};
-		6D73357019A70C0800A3552A /* PBXContainerItemProxy */ = {
+		6D7335BF19A711BD00A3552A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 6D73356919A70C0800A3552A /* GMDLibrary.xcodeproj */;
+			containerPortal = 6D7335B819A711BD00A3552A /* GMDLibrary.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 6D73353F19A7061D00A3552A;
+			remoteGlobalIDString = 6D73358C19A7104E00A3552A;
 			remoteInfo = GMDLibraryTests;
 		};
 /* End PBXContainerItemProxy section */
@@ -143,7 +143,7 @@
 		6D66CEBF1964F97A00AF16F9 /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		6D66CEC11964FB0B00AF16F9 /* CDKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDKUser.h; sourceTree = "<group>"; };
 		6D66CEC21964FB0B00AF16F9 /* CDKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDKUser.m; sourceTree = "<group>"; };
-		6D73356919A70C0800A3552A /* GMDLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GMDLibrary.xcodeproj; path = Frameworks/GMDLibrary/GMDLibrary.xcodeproj; sourceTree = "<group>"; };
+		6D7335B819A711BD00A3552A /* GMDLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GMDLibrary.xcodeproj; path = Frameworks/GMDLibrary/GMDLibrary.xcodeproj; sourceTree = "<group>"; };
 		6DA9138B1998793B00DBCD77 /* Oswald-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Bold.otf"; sourceTree = "<group>"; };
 		6DA9138C1998793B00DBCD77 /* Oswald-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Light.otf"; sourceTree = "<group>"; };
 		6DA9138D1998793B00DBCD77 /* Oswald-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.otf"; sourceTree = "<group>"; };
@@ -315,7 +315,7 @@
 		6D66CE841964F57E00AF16F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6D73356919A70C0800A3552A /* GMDLibrary.xcodeproj */,
+				6D7335B819A711BD00A3552A /* GMDLibrary.xcodeproj */,
 				6D07801E19A47A8000B5BC11 /* libsqlite3.0.dylib */,
 				6D07801C19A4787100B5BC11 /* Parse.framework */,
 				6D07801419A470BF00B5BC11 /* CoreLocation.framework */,
@@ -397,11 +397,11 @@
 			name = Library;
 			sourceTree = "<group>";
 		};
-		6D73356A19A70C0800A3552A /* Products */ = {
+		6D7335B919A711BD00A3552A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6D73356F19A70C0800A3552A /* libGMDLibrary.a */,
-				6D73357119A70C0800A3552A /* GMDLibraryTests.xctest */,
+				6D7335BE19A711BD00A3552A /* libGMDLibrary.a */,
+				6D7335C019A711BD00A3552A /* GMDLibraryTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -576,8 +576,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 6D73356A19A70C0800A3552A /* Products */;
-					ProjectRef = 6D73356919A70C0800A3552A /* GMDLibrary.xcodeproj */;
+					ProductGroup = 6D7335B919A711BD00A3552A /* Products */;
+					ProjectRef = 6D7335B819A711BD00A3552A /* GMDLibrary.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -589,18 +589,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		6D73356F19A70C0800A3552A /* libGMDLibrary.a */ = {
+		6D7335BE19A711BD00A3552A /* libGMDLibrary.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libGMDLibrary.a;
-			remoteRef = 6D73356E19A70C0800A3552A /* PBXContainerItemProxy */;
+			remoteRef = 6D7335BD19A711BD00A3552A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		6D73357119A70C0800A3552A /* GMDLibraryTests.xctest */ = {
+		6D7335C019A711BD00A3552A /* GMDLibraryTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = GMDLibraryTests.xctest;
-			remoteRef = 6D73357019A70C0800A3552A /* PBXContainerItemProxy */;
+			remoteRef = 6D7335BF19A711BD00A3552A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

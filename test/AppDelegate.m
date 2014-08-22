@@ -14,7 +14,7 @@
 #import "MainViewController.h"
 #import <Parse/Parse.h>
 #import "FeedViewController.h"
-#import <GMDLibrary/Greenview.h>
+#import <GMDLibrary/GMDLibrary.h>
 
 
 
