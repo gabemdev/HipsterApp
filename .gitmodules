@@ -1,0 +1,3 @@
+[submodule "Frameworks/GMDLibrary"]
+	path = Frameworks/GMDLibrary
+	url = git@github.com:gabemdev/GMDLibrary.git

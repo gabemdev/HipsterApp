@@ -18,6 +18,7 @@
 #import "AccountViewController.h"
 #import "GMWebViewController.h"
 #import <Parse/Parse.h>
+#import <GMDLibrary/GreenView.h>
 
 NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotification";
 
@@ -100,6 +101,8 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
 
+    GreenView *green = [[GreenView alloc] initWithFrame:CGRectMake(20.0f, 10.0f, 200.0f, 200.0f)];
+    [self.view addSubview:green];
     
     UILabel *footer = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 32.0f)];
     footer.backgroundColor = [UIColor clearColor];
