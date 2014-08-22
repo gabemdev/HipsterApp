@@ -61,4 +61,18 @@
     return button;
 }
 
++ (UIButton *) hipsterProfileButton {
+    UIButton *button = [[self alloc] initWithFrame:CGRectZero];
+    [button setTitleColor:[UIColor hipsterTextColor] forState:UIControlStateNormal];
+    [button setTitleShadowColor:[UIColor colorWithWhite:0.0f alpha:0.2f] forState:UIControlStateNormal];
+//    [button setBackgroundImage:[[UIImage imageNamed:@""] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateNormal];
+//    [button setBackgroundImage:[[UIImage imageNamed:@""] stretchableImageWithLeftCapWidth:5 topCapHeight:0] forState:UIControlStateHighlighted];
+    [button setBackgroundColor:[UIColor lightGrayColor]];
+    
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+    button.titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    return button;
+    
+}
+
 @end

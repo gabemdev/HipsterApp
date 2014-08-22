@@ -14,6 +14,10 @@
     return [self colorWithPatternImage:[UIImage imageNamed:@"arches"]];
 }
 
++ (UIColor *)hipsterStaticColor {
+    return [self colorWithPatternImage:[UIImage imageNamed:@"bg_main"]];
+}
+
 + (UIColor *)hipsterTextColor {
     return [self colorWithWhite:0.267f alpha:1.0f];
 }
@@ -36,6 +40,10 @@
 
 + (UIColor *)hipsterOrangeColor {
     return [self colorWithRed:1.000f green:0.447f blue:0.263f alpha:1.0f];
+}
+
++ (UIColor *)hipsterLightGrayColor {
+    return [self colorWithRed:0.86 green:0.86 blue:0.86 alpha:1.00];
 }
 
 @end

@@ -14,6 +14,6 @@
 + (UIButton *)hipsterBigOrangeButton;   // Used in Upgrade
 + (UIButton *)hipsterBigGrayButton;     // Used in Upgrade
 + (UIButton *)hipsterBarButton;         
-
++ (UIButton *)hipsterProfileButton;
 
 @end

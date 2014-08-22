@@ -12,6 +12,11 @@
 #import "SignInViewController.h"
 #import "ListTableViewController.h"
 #import "MainViewController.h"
+#import <Parse/Parse.h>
+#import "FeedViewController.h"
+#import <GMDLibrary/Greenview.h>
+
+
 
 @implementation AppDelegate
 
@@ -27,6 +32,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    [Parse setApplicationId:@"pM9NqdVLuLZwlx053n1pTH4jShYNPMhqqwtRCd4W"
+                  clientKey:@"91xPVaLZ3r54RumCGkWijCiVM7RxkEpn5UEp9O9O"];
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     [self applyStylesheet];
 	
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -61,8 +72,9 @@
         
 	} else {
         
-		UIViewController *viewController = [[ListViewController alloc] init];
+		UIViewController *viewController = [[FeedViewController alloc] init];
 		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        [navigationController.navigationBar setTranslucent:NO];
 		self.window.rootViewController = navigationController;
 	}
     
@@ -90,11 +102,12 @@
 
 - (void)applyStylesheet {
     //status bar
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     
 	// Navigation bar
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
+    [navigationBar setBarStyle:UIBarStyleBlack];
+    
     [navigationBar setBarTintColor:[UIColor colorWithRed:0.031f green:0.506f blue:0.702f alpha:1.0f]];
 	[navigationBar setTitleVerticalPositionAdjustment:-1.0f forBarMetrics:UIBarMetricsDefault];
     
@@ -102,7 +115,7 @@
     [shadow setShadowColor:[UIColor colorWithWhite:0.0f alpha:0.2f]];
     [shadow setShadowOffset:CGSizeMake(0.0f, 1.0f)];
     
-    [navigationBar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:20.0f],
+    [navigationBar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Oswald-Bold" size:20.0f],
                                             NSShadowAttributeName: shadow,
                                             NSForegroundColorAttributeName: [UIColor whiteColor],
                                             }];
@@ -138,12 +151,18 @@
 	
 	// Toolbar
 	UIToolbar *toolbar = [UIToolbar appearance];
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsDefault];
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+    [toolbar setBarTintColor:[UIColor colorWithRed:0.031f green:0.506f blue:0.702f alpha:1.0f]];
+    
+    
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsDefault];
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+//    [toolbar setBackgroundColor:[UIColor colorWithRed:0.031f green:0.506f blue:0.702f alpha:1.0f]];
+    
 	
 	// Toolbar mini
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background-mini"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsLandscapePhone];
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background-mini"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsLandscapePhone];
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background-mini"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsLandscapePhone];
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background-mini"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsLandscapePhone];
+    
 }
 
 @end

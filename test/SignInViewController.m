@@ -9,6 +9,10 @@
 #import "SignInViewController.h"
 #import "UIFont+HipsteriOSAdditions.h"
 #import "UIColor+HipsteriOSAdditions.h"
+#import "SettingsViewController.h"
+#import "FeedViewController.h"
+#import <Parse/Parse.h>
+#import "GMHudView.h"
 
 @interface SignInViewController ()
 - (void)_toggleMode:(id)sender;
@@ -85,7 +89,7 @@
 
 - (id)init {
 	if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
-		self.title = @"Hipster";
+//		self.title = @"Hipster";
 //		UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title"]];
 //		title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);
 //		self.navigationItem.titleView = title;
@@ -98,9 +102,18 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width/2, 60.0f)];
+    title.text = @"HIPSTER";
+    title.textAlignment = NSTextAlignmentCenter;
+    title.font = [UIFont fontWithName:@"Oswald-Bold" size:32.0];
+    title.textColor = [UIColor whiteColor];
+    [title setShadowColor:[UIColor darkGrayColor]];
+    [title setShadowOffset:CGSizeMake(0.0f, 1.0f)];
+    self.navigationItem.titleView = title;
 	
 	UIView *background = [[UIView alloc] initWithFrame:CGRectZero];
-	background.backgroundColor = [UIColor hipsterArchesColor];
+	background.backgroundColor = [UIColor hipsterStaticColor];
 	self.tableView.backgroundView = background;
     
 	_footerButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 34.0f)];
@@ -116,7 +129,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-    
+    [self _checkUser];
 	// TODO: Terrible hack
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[self.usernameTextField becomeFirstResponder];
@@ -137,8 +150,44 @@
 
 - (void)signIn:(id)sender {
 	if (!self.navigationItem.rightBarButtonItem.enabled) {
+        
 		return;
 	}
+    
+    NSString *username = [_usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *password = [_passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if ([username length] == 0 || [password length] == 0) {
+        UIAlertView *alertView= [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                           message:@"Make sure you enter your user name and password!"
+                                                          delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    else {
+        GMHudView *hud = [[GMHudView alloc] initWithTitle:@"Signing in..." loading:YES];
+        [hud show];
+        [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
+            if (error) {
+                UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Sorry!"
+                                                                   message:[error.userInfo objectForKey:@"error"]
+                                                                  delegate:nil
+                                                         cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                [hud failAndDismissWithTitle:@"Failed"];
+            }
+            
+            else {
+                [hud completeAndDismissWithTitle:@"Signed In!"];
+                FeedViewController *viewController = [[FeedViewController alloc] init];
+                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                //        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+                navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                [self.navigationController presentViewController:navController animated:YES completion:nil];
+            }
+        }];
+    }
+
 }
 
 
@@ -146,6 +195,73 @@
 	if (!self.navigationItem.rightBarButtonItem.enabled) {
 		return;
 	}
+    
+    NSString *username = [_usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *password = [_passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *email    = [_emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if ([username length] == 0 || [password length] == 0 || [email length] == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                            message:@"Make sure you enter a correct username, password and email address!"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    else if (!self.usernameTextField.text.length >= 3) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                            message:@"Username is too short!"
+                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        
+    }
+    
+    else if (!self.passwordTextField.text.length >= 6) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                            message:@"Password does not meet the requirements!"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+    else if (!self.emailTextField.text.length >= 5) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                            message:@"Please enter a valid email address"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    else {
+        GMHudView *hud = [[GMHudView alloc] initWithTitle:@"Signing up..." loading:YES];
+        [hud show];
+        
+        PFUser *newUser = [PFUser user];
+        newUser.username = username;
+        newUser.password = password;
+        newUser.email = email;
+        
+        [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                [hud failAndDismissWithTitle:@"Failed"];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry!"
+                                                                    message:[error.userInfo objectForKey:@"error"]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                [alertView show];
+            }
+            else {
+                [hud completeAndDismissWithTitle:@"Signed Up!"];
+                FeedViewController *viewController = [[FeedViewController alloc] init];
+                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                //        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+                navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                [self.navigationController presentViewController:navController animated:YES completion:nil];
+                
+            }
+        }];
+    }
+    
 	
 }
 
@@ -293,5 +409,36 @@
 	}
 	return NO;
 }
+
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+		[self _checkUser];
+	}
+}
+
+
+#pragma mark - Private
+
+- (void)_checkUser {
+    PFUser *currentUser = [PFUser currentUser];
+	if (currentUser) {
+		UIViewController *viewController = [[FeedViewController alloc] init];
+		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+		navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+		
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [self.splitViewController presentViewController:navigationController animated:YES completion:nil];
+		} else {
+            
+            [self.navigationController presentViewController:navigationController animated:NO completion:nil];
+            NSLog(@"Current user: %@", currentUser.username);
+		}
+        
+        return;
+	}
+}
+
 
 @end

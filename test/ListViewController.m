@@ -25,10 +25,27 @@ NSString *const kCDISelectedListKey = @"HSISelectedListKey";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title"]];
-    title.accessibilityLabel = @"Cheddar";
-	title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);
-	self.navigationItem.titleView = title;
+//    UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title"]];
+//    title.accessibilityLabel = @"Cheddar";
+//	title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);
+//	self.navigationItem.titleView = title;
+    
+//    for (NSString* family in [UIFont familyNames])
+//    {
+//        NSLog(@"%@", family);
+//        
+//        for (NSString* name in [UIFont fontNamesForFamilyName: family])
+//        {
+//            NSLog(@"  %@", name);
+//        }
+//    }
+    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 116.0f, 32.0f)];
+    title.text = @"HIPSTER";
+    title.font = [UIFont fontWithName:@"Oswald-Bold" size:32.0];
+    title.textColor = [UIColor whiteColor];
+    self.navigationItem.titleView = title;
+    
 	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Lists" style:UIBarButtonItemStyleBordered target:nil action:nil];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus"] style:UIBarButtonItemStyleBordered target:self action:@selector(createList:)];
     

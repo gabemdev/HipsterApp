@@ -24,6 +24,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editTask:)];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
 
@@ -35,12 +37,14 @@
 
 #pragma mark - NSObject
 
-- (id)init {
+- (instancetype)init {
 	if ((self = [super init])) {
 //		_createTaskSemaphore = dispatch_semaphore_create(0);
 //		dispatch_semaphore_signal(_createTaskSemaphore);
 		
 		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        
+        
 	}
 	return self;
 }

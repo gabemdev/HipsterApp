@@ -17,5 +17,7 @@
 +(UIColor *)hipsterSteelColor;
 +(UIColor *)hipsterHighlightColor;
 +(UIColor *)hipsterOrangeColor;
++(UIColor *)hipsterStaticColor;
++(UIColor *)hipsterLightGrayColor;
 
 @end

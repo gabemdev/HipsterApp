@@ -23,18 +23,27 @@
 	NSString *text = [self valueForKey:@"title"];
 	UIFont *font = [UIFont fontWithName:@"HelveticaNeue" size:15.0f];
 //	UILineBreakMode lineBreakMode = UILineBreakModeClip;
-    NSLineBreakMode lineBreakMode = NSLineBreakByClipping;
 //	UITextAlignment alignment = UITextAlignmentCenter;
-    NSTextAlignment alignment = NSTextAlignmentCenter;
+    
+//    NSLineBreakMode lineBreakMode = NSLineBreakByClipping;
+//    NSTextAlignment alignment = NSTextAlignmentCenter;
+    
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineBreakMode = NSLineBreakByClipping;
+    style.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: font,
+                                 NSParagraphStyleAttributeName: style };
     
 	rect.origin.y += 8.0f;
 	[[UIColor colorWithRed:0.588f green:0.090f blue:0.125f alpha:1.0f] set];
-	[text drawInRect:rect withFont:font lineBreakMode:lineBreakMode alignment:alignment];
-    [text drawInRect:rect withAttributes:@{NSFontAttributeName: font}];
+//	[text drawInRect:rect withFont:font lineBreakMode:lineBreakMode alignment:alignment];
+    [text drawInRect:rect withAttributes:attributes];
     
 	[[UIColor whiteColor] set];
 	rect.origin.y -= 1.0f;
-	[text drawInRect:rect withFont:font lineBreakMode:lineBreakMode alignment:alignment];
+//	[text drawInRect:rect withFont:font lineBreakMode:lineBreakMode alignment:alignment];
+    [text drawInRect:rect withAttributes:attributes];
 }
 
 @end
