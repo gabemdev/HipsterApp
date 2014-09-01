@@ -10,7 +10,7 @@
 
 @interface FeedCell : UICollectionViewCell
 
-@property (nonatomic) UIImageView *imageView;
 @property (nonatomic) NSDictionary *photo;
+@property (nonatomic) UIImageView *cellImage;
 
 @end

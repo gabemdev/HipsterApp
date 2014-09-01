@@ -14,7 +14,9 @@
 #import "MainViewController.h"
 #import <Parse/Parse.h>
 #import "FeedViewController.h"
-#import <GMDLibrary/GMDLibrary.h>
+#import "UIColor+HipsteriOSAdditions.h"
+#import "AFNetworkActivityIndicatorManager.h"
+//#import <GMDLibrary/GMDLibrary.h>
 
 
 
@@ -29,16 +31,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSURLCache *URlCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
+    [NSURLCache setSharedURLCache:URlCache];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
     [Parse setApplicationId:@"pM9NqdVLuLZwlx053n1pTH4jShYNPMhqqwtRCd4W"
                   clientKey:@"91xPVaLZ3r54RumCGkWijCiVM7RxkEpn5UEp9O9O"];
-    
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
-    [self applyStylesheet];
 	
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
@@ -68,10 +69,14 @@
 //        _splitViewController.viewControllers = [NSArray arrayWithObjects:rootNav, detailNav, nil];
 //        _splitViewController.delegate = detail;
         
+        
+        
+        
         self.window.rootViewController = [[splitViewController alloc] init];
         
 	} else {
         
+        [self applyStylesheet];
 		UIViewController *viewController = [[FeedViewController alloc] init];
 		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
         [navigationController.navigationBar setTranslucent:NO];
@@ -108,7 +113,7 @@
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
     [navigationBar setBarStyle:UIBarStyleBlack];
     
-    [navigationBar setBarTintColor:[UIColor colorWithRed:0.031f green:0.506f blue:0.702f alpha:1.0f]];
+    [navigationBar setBarTintColor:[UIColor hipsterBlueColor]];
 	[navigationBar setTitleVerticalPositionAdjustment:-1.0f forBarMetrics:UIBarMetricsDefault];
     
     NSShadow *shadow = [NSShadow new];
@@ -117,51 +122,18 @@
     
     [navigationBar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Oswald-Bold" size:20.0f],
                                             NSShadowAttributeName: shadow,
-                                            NSForegroundColorAttributeName: [UIColor whiteColor],
+                                            NSForegroundColorAttributeName: [UIColor whiteColor]
                                             }];
 	
 	// Navigation bar mini
 	[navigationBar setTitleVerticalPositionAdjustment:-2.0f forBarMetrics:UIBarMetricsLandscapePhone];
 	
-//	// Navigation button
-//    NSDictionary *barButtonTitleTextAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:14.0f],
-//                                                   NSShadowAttributeName: shadow};
-//    
-//	UIBarButtonItem *barButton = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
-//	[barButton setTitlePositionAdjustment:UIOffsetMake(0.0f, 1.0f) forBarMetrics:UIBarMetricsDefault];
-//	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];
-//	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateHighlighted];
-//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-highlighted"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-//	
-//	// Navigation back button
-//	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(2.0f, -2.0f) forBarMetrics:UIBarMetricsDefault];
-//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-highlighted"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-//	
-//	// Navigation button mini
-//	//	[barButton setTitlePositionAdjustment:UIOffsetMake(0.0f, 1.0f) forBarMetrics:UIBarMetricsLandscapePhone];
-//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
-//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini-highlighted"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
-//	
-//	// Navigation back button mini
-//	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(2.0f, -2.0f) forBarMetrics:UIBarMetricsLandscapePhone];
-//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
-//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini-highlighted"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
-	
 	// Toolbar
 	UIToolbar *toolbar = [UIToolbar appearance];
-    [toolbar setBarTintColor:[UIColor colorWithRed:0.031f green:0.506f blue:0.702f alpha:1.0f]];
-    
-    
-//	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsDefault];
-//	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-//    [toolbar setBackgroundColor:[UIColor colorWithRed:0.031f green:0.506f blue:0.702f alpha:1.0f]];
-    
-	
-	// Toolbar mini
-//	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background-mini"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsLandscapePhone];
-//	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background-mini"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsLandscapePhone];
+    [toolbar setBarStyle:UIBarStyleDefault];
+    [toolbar setBarTintColor:[UIColor hipsterBlueColor]];
+    [toolbar setBackgroundColor:[UIColor hipsterBlueColor]];
+
     
 }
 

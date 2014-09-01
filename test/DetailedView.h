@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailedView : UIView
+@property (nonatomic) NSDictionary *photo;
 
 @end

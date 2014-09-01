@@ -347,7 +347,12 @@ static CGFloat kIndicatorSize = 40.0;
 
 - (void)setTransformForCurrentOrientation:(BOOL)animated {
     CGFloat rotation = 0.0f;
+    
     switch ([UIApplication sharedApplication].statusBarOrientation) {
+//        case UIInterfaceOrientationUnknown: {
+//            rotation = rotation;
+//            break;
+//        }
         case UIInterfaceOrientationPortrait: {
             // Zero
             break;

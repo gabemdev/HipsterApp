@@ -18,9 +18,8 @@
 #import "AccountViewController.h"
 #import "GMWebViewController.h"
 #import <Parse/Parse.h>
-#import <GMDLibrary/GreenView.h>
 
-NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotification";
+//NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotification";
 
 @interface SettingsViewController ()
 @property (nonatomic, strong) UILabel *upgradeLabel;
@@ -100,9 +99,6 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
     self.title = @"Settings";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-
-    GreenView *green = [[GreenView alloc] initWithFrame:CGRectMake(20.0f, 10.0f, 200.0f, 200.0f)];
-    [self.view addSubview:green];
     
     UILabel *footer = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 32.0f)];
     footer.backgroundColor = [UIColor clearColor];
@@ -159,7 +155,7 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
     }
     
     //SIgn Out
-    [CDKUser setCurrentUser:nil];
+    [PFUser logOut];
     AppDelegate *appDelegate = [AppDelegate sharedAppDelegate];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -173,7 +169,7 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -183,23 +179,13 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
 		return 1;
 	}
     
-//	// Display
-//	else if (section == 1) {
-//		return 2;
-//	}
-    
-	// Tasks
+	// About
 	else if (section == 1) {
-		return 1;
-	}
-    
-	// About and Support
-	else if (section == 2) {
-		return 2;
+		return 3;
 	}
     
 	// Sign out
-	else if (section == 3) {
+	else if (section == 2) {
 		return 1;
 	}
 	
@@ -231,51 +217,30 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
         cell.textLabel.textColor = [UIColor hipsterBlueColor];
 		cell.detailTextLabel.text = nil;
 	}
-    
-//	// Display
-//	else if (indexPath.section == 1) {
-//		if (indexPath.row == 0) {
-//			cell.textLabel.text = @"Text Size";
-//            cell.textLabel.textColor = [UIColor hipsterTextColor];
-//			cell.detailTextLabel.text = @"NIl";
-//		}
-//        else if (indexPath.row == 1) {
-//			cell.textLabel.text = @"Font";
-//            cell.textLabel.textColor = [UIColor hipsterTextColor];
-//			cell.detailTextLabel.text = @"NIl";
-//		}
-//	}
-//	
-	// Tasks
+	// About
 	else if (indexPath.section == 1) {
-		if (indexPath.row == 0) {
-			cell.textLabel.text = @"About Hipster";
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"About Hipster";
             cell.textLabel.textColor = [UIColor hipsterBlueColor];
-//            cell.imageView.image = [UIImage imageNamed:@"star"];
+            //            cell.imageView.image = [UIImage imageNamed:@"star"];
             cell.imageView.image = [UIImage imageNamed:@"more-icon-terms"];
 			cell.detailTextLabel.text = nil;
-		}
-	}
-	
-	// About and Support
-	else if (indexPath.section == 2) {
-		if (indexPath.row == 0) {
-			cell.textLabel.text = @"Privacy";
+        } else if (indexPath.row == 1) {
+            cell.textLabel.text = @"Privacy";
             cell.textLabel.textColor = [UIColor hipsterSteelColor];
-//            cell.imageView.image = [UIImage imageNamed:@"locks"];
+            //            cell.imageView.image = [UIImage imageNamed:@"locks"];
             cell.imageView.image = [UIImage imageNamed:@"more-icon-privacy"];
 			cell.detailTextLabel.text = nil;
-		} else if (indexPath.row == 1) {
-			cell.textLabel.text = @"Get Help";
+        } else if (indexPath.row == 2) {
+            cell.textLabel.text = @"Get Help";
             cell.textLabel.textColor = [UIColor hipsterOrangeColor];
-//            cell.imageView.image = [UIImage imageNamed:@"mail"];
+            //            cell.imageView.image = [UIImage imageNamed:@"mail"];
             cell.imageView.image = [UIImage imageNamed:@"more-icon-help"];
 			cell.detailTextLabel.text = nil;
-		}
+        }
 	}
-    
 	// Sign out
-	else if (indexPath.section == 3) {
+	else if (indexPath.section == 2) {
 		cell.textLabel.text = @"Sign Out";
         cell.textLabel.textColor = [UIColor redColor];
 //        cell.imageView.image = [UIImage imageNamed:@"x"];
@@ -309,11 +274,11 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
     if (section == 0) {
         return @"Account";
     }
-//    else if (section == 1) {
-//        return @"Display";
-//    }
     else if (section == 1) {
         return @"About";
+    }
+    else if (section == 2) {
+        return @"Sign Out";
     }
     return nil;
 }
@@ -328,24 +293,26 @@ NSString *const kCDIFontDidChangeNotificationName = @"CDIFontDidChangeNotificati
     //About
     else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            GMWebViewController *viewController = [[GMWebViewController alloc] init];
-            [viewController loadURL:[NSURL URLWithString:@"http://gabemdev.com"]];
-            [self.navigationController pushViewController:viewController animated:YES];
-            return;
-        }
-    }
-//Privacy and Support
-    else if (indexPath.section == 2) {
-        if (indexPath.row == 0) {
-#pragma message ("Add View controlelr for Privacy")
+            GMWebViewController *webView = [[GMWebViewController alloc] init];
+            [webView loadURL:[NSURL URLWithString:@"http://gabemdev.com"]];
+            [self.navigationController pushViewController:webView animated:YES];
             return;
         } else if (indexPath.row == 1) {
-#pragma message ("Add View Controller for Support")
+            //Need to change to Privacy url
+            GMWebViewController *webView = [[GMWebViewController alloc] init];
+            [webView loadURL:[NSURL URLWithString:@"http://www.gabemdev.com"]];
+            [self.navigationController pushViewController:webView animated:YES];
+            return;
+        } else if (indexPath.row == 2) {
+            //Need to change to Get Help url
+            GMWebViewController *webView = [[GMWebViewController alloc] init];
+            [webView loadURL:[NSURL URLWithString:@""]];
+            [self.navigationController pushViewController:webView animated:YES];
             return;
         }
     }
-    
-    else if (indexPath.section == 3) {
+    // Sign out
+    else if (indexPath.section == 2) {
         [PFUser logOut];
         [self signOut:nil];
     }

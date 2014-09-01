@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AccountView : UIView
+@interface AccountView : UIView <UINavigationControllerDelegate>
+
+//- (void)_wwwOpen:(id)sender;
+//- (void)camera:(id)sender;
 
 @end

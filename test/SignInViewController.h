@@ -11,6 +11,8 @@
 @property (nonatomic, strong, readonly) UITextField *usernameTextField;
 @property (nonatomic, strong, readonly) UITextField *emailTextField;
 @property (nonatomic, strong, readonly) UITextField *passwordTextField;
+@property (nonatomic, strong, readonly) UITextField *nameTextField;
+@property (nonatomic, strong, readonly) UITextField *lastNameTextField;
 
 + (CGFloat)textFieldWith;
 
